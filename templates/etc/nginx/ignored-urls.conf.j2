@@ -1,0 +1,71 @@
+    location ~ (?i).*etc/passwd.* {
+        return 399;
+    }
+
+    location ~ (?i)^/admin/.* {
+        return 399;
+    }
+
+    location ~ (?i)^/phpmy.* {
+        return 399;
+    }
+
+    location ~ (?i)^/myadmin.* {
+        return 399;
+    }
+
+    location ~ (?i)^/pma20.* {
+        return 399;
+    }
+
+    location ~ (?i)^.*dumper.php {
+        return 399;
+    }
+
+    location ~ .*id_dsa$ {
+        return 399;
+    }
+
+    location ~ ^/mysql.* {
+        return 399;
+    }
+
+    location ~ ^/fck.* {
+        return 399;
+    }
+
+    location ~ .*v2.1.0/uploadify.php$ {
+        return 399;
+    }
+
+    location ~ ^/manager/html.* {
+        return 399;
+    }
+
+{% if check_wordpress %}
+    location = /wp-login.php {
+        return       399;
+    }
+
+    location ~ /wp-content/.* {
+        return       399;
+    }
+{% endif %}
+
+{% if check_wordpress_xmlrpc %}
+    location = /xmlrpc.php {
+        return       399;
+    }
+{% endif %}
+
+    location ~ ^.*setup-config.php$ {
+        return       399;
+    }
+
+    location ~ ^.*wlwmanifest.xml$ {
+        return       399;
+    }
+
+    location ~ /cross/(botas|comprar|ugg|donde-comprar)* {
+        return       399;
+    }

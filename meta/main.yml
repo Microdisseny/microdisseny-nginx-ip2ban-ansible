@@ -1,0 +1,15 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: MICRODISSENY GISCUBE SL
+  description: Microdisseny role to block bad urls
+  company: "MICRODISSENY GISCUBE SL"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.1
+  platforms:
+  - name: Ubuntu
+    versions:
+    - bionic
+    - xenial
+    - trusty

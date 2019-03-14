@@ -1,0 +1,51 @@
+---
+
+- name: Create jail.local fail2ban file if not exists
+  copy:
+    remote_src=yes
+    src=/etc/fail2ban/jail.conf
+    dest=/etc/fail2ban/jail.local
+    force=no
+  notify:
+    - restart fail2ban
+
+- name: Add nginx-badrequests.conf fail2ban filter
+  copy:
+    src=etc/fail2ban/filter.d/nginx-badrequests.conf
+    dest=/etc/fail2ban/filter.d/nginx-badrequests.conf
+    force=yes
+    owner=root
+    group=root
+    mode=0744
+  notify:
+    - restart fail2ban
+
+- name: Add nginx-badrequests to fail2ban
+  blockinfile:
+    path: /etc/fail2ban/jail.local
+    content: |
+      [nginx-badrequests]
+
+      enabled  = true
+      port     = http,https
+      filter   = nginx-badrequests
+      logpath  = /var/log/nginx/access.log
+      # bantime  = 3600   ; 1 hour
+      # bantime  = 86400  ; 1 day
+      bantime = 2592000   ; 1 month
+      # findtime = 3600   ; 1 hour
+      findtime = 86400  ; 1 day
+      maxretry = 2
+  notify:
+    - restart fail2ban
+
+- name: Copy ignored-urls to each site conf folder
+  template:
+    src: templates/etc/nginx/ignored-urls.conf.j2
+    dest: /etc/nginx/sites-available/{{ item }}/ignored-urls.conf
+    owner: root
+    group: root
+    mode: 0744
+  with_items: "{{ ignored_urls_confs_folders }}"
+  notify:
+    - reload nginx

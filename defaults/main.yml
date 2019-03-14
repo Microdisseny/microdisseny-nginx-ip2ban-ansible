@@ -1,0 +1,10 @@
+---
+
+# Check wordpress
+check_wordpress: yes
+
+# Check wordpress xmlrpc
+check_wordpress_xmlrpc: yes
+
+# Nginx conf folders where to copy ignored-urls.conf
+ignored_urls_confs_folders: []
